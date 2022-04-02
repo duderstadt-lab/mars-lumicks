@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>31.1.0</version>
+		<relativePath />
+	</parent>
+
+	<groupId>de.mpg.biochem</groupId>
+	<artifactId>mars-lumicks</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<name>mars-lumicks</name>
+	<url>https://github.com/duderstadt-lab/mars-lumicks</url>
+	<inceptionYear>2022</inceptionYear>
+	<organization>
+		<name>Max Planck Institute of Biochemistry</name>
+		<url>https://biochem.mpg.de/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>bsd_2</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<!-- See https://imagej.net/Team -->
+		<developer>
+			<id>karlduderstadt</id>
+			<name>Karl Duderstadt</name>
+			<url>http://biochem.mpg.de/duderstadt/</url>
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Nadia Huisjes</name>
+		</contributor>
+		<contributor>
+			<name>Thomas Retzer</name>
+		</contributor>
+	</contributors>
+
+    <mailingLists>
+		<mailingList>
+			<name>Duderstadt Lab</name>
+			<archive>https://duderstadtlab.org/</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:git:git://github.com/duderstadt-lab/mars-lumicks</connection>
+		<developerConnection>scm:git:git@github.com:duderstadt-lab/mars-lumicks</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/duderstadt-lab/mars-lumicks</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/duderstadt-lab/mars-lumicks/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>GitHub Actions</system>
+		<url>https://github.com/duderstadt-lab/mars-lumicks/actions</url>
+	</ciManagement>
+
+	<properties>
+		<package-name>de.mpg.biochem.mars.molecule.commands</package-name>
+		<license.licenseName>bsd_2</license.licenseName>
+		<license.copyrightOwners>Karl Duderstadt</license.copyrightOwners>
+
+		<!-- NB: Deploy releases to the SciJava Maven repository. -->
+		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
+
+		<cisd.jhdf5.version>19.04.0</cisd.jhdf5.version>
+		<mars-core.version>1.0.0-beta-29</mars-core.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>de.mpg.biochem</groupId>
+			<artifactId>mars-core</artifactId>
+			<version>${mars-core.version}</version>
+		</dependency>
+
+		<!-- Third-party dependencies -->
+		<dependency>
+			<groupId>cisd</groupId>
+			<artifactId>jhdf5</artifactId>
+			<version>${cisd.jhdf5.version}</version>
+		</dependency>
+	</dependencies>
+	<description>Converter from lumicks h5 format to molecule archive format</description>
+
+	<repositories>
+		<repository>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
