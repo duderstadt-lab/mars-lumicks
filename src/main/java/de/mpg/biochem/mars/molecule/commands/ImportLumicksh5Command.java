@@ -67,15 +67,6 @@ public class ImportLumicksh5Command extends DynamicCommand implements Command {
 
 	@Parameter
 	private LogService logService;
-
-    @Parameter
-    private StatusService statusService;
-
-	@Parameter
-    private MoleculeArchiveService moleculeArchiveService;
-
-	@Parameter
-    private UIService uiService;
 	
 	@Parameter(label = "LUMICKS h5 file")
 	private File file;
