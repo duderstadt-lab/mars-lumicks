@@ -84,7 +84,7 @@
 		<releaseProfiles>sign,deploy-to-scijava</releaseProfiles>
 
 		<cisd.jhdf5.version>19.04.0</cisd.jhdf5.version>
-		<mars-core.version>1.0.0-beta-29</mars-core.version>
+		<mars-core.version>1.0.0-beta-33</mars-core.version>
 	</properties>
 
 	<dependencies>
@@ -101,7 +101,7 @@
 			<version>${cisd.jhdf5.version}</version>
 		</dependency>
 	</dependencies>
-	<description>Converter from lumicks h5 format to molecule archive format</description>
+	<description>Converter from lumicks h5 format to Molecule Archive format</description>
 
 	<repositories>
 		<repository>
