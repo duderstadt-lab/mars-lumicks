@@ -1,6 +1,6 @@
 /*-
  * #%L
- * Lumicks h5 to molecule archive importer
+ * Import command for convert of lumicks h5 format to Molecule Archive format
  * %%
  * Copyright (C) 2019 - 2022 Karl Duderstadt
  * %%
