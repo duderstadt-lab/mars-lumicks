@@ -1,3 +1,5 @@
+[![](https://github.com/duderstadt-lab/mars-lumicks/actions/workflows/build-main.yml/badge.svg)](https://github.com/duderstadt-lab/mars-lumicks/actions/workflows/build-main.yml)
+
 ## Mars lumicks h5 format importer
 
 The company [Lumicks](https://lumicks.com) offers optical tweezers microscopes for high resolution force manipulation of biomolecules. These can include fluorescence imaging options to directly visualize single-molecule dynamics. This repository contains a Fiji/ImageJ2 command that converts from lumicks h5 format to Mars Molecule Archive format. Currently, the importer has been developed and tested with a typical two-bead optical tweezing experiment without fluorescence imaging.
