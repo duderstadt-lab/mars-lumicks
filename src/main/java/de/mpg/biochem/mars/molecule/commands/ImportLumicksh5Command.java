@@ -108,6 +108,8 @@ public class ImportLumicksh5Command extends DynamicCommand implements Command {
 		//Before we start let's check to see this is actually the type of LUMICKS file we expect.
 		if (reader.string().getAttr("/", "Bluelake version") == null) {
 			uiService.showDialog("BlueLake version not found, is this a lumicks file?", MessageType.ERROR_MESSAGE);
+			logService.info(LogBuilder.endBlock(false));
+			archive = null;
 			return;
 		}
 
@@ -116,8 +118,9 @@ public class ImportLumicksh5Command extends DynamicCommand implements Command {
 
 		//Output first part of log message...
 		logService.info(log);
-
+		
 		archive = new SingleMoleculeArchive("Imported LUMICKS archive");
+
 		String metaUID = MarsMath.getUUID58().substring(0, 10);
 		MarsOMEMetadata meta = archive.createMetadata(metaUID);
 		
@@ -144,18 +147,40 @@ public class ImportLumicksh5Command extends DynamicCommand implements Command {
 		
 		if (!members.contains("Force HF")) {
 			uiService.showDialog("No Force HF directory found. Not sure where to locate the force data.", MessageType.ERROR_MESSAGE);
+			logService.info(LogBuilder.endBlock(false));
+			archive = null;
 			return;
 		}
 				
 		List<String> forceMembers = reader.getGroupMembers("/Force HF/");
 		if (!forceMembers.contains("Force 1x") || !forceMembers.contains("Force 2x")) {
 			uiService.showDialog("Both Force 1x and Force 2x could not be located.", MessageType.ERROR_MESSAGE);
+			logService.info(LogBuilder.endBlock(false));
+			archive = null;
 			return;
 		}
 	
 		//Import Force 1x and 2x force data
 		double samplingRate = reader.uint64().getAttr("/Force HF/Force 1x/", "Sample rate (Hz)");
 		double force1xStartTime = reader.uint64().getAttr("/Force HF/Force 1x/", "Start time (ns)");
+		
+		if (downsample) {
+			//Check the value provided is reasonable
+			if (downsampleToHz < 1) {
+				uiService.showDialog("The downsampling rate must be greater than or equal to 1 Hz.", MessageType.ERROR_MESSAGE);
+				logService.info(LogBuilder.endBlock(false));
+				archive = null;
+				return;
+			}
+			if (downsampleToHz > samplingRate/2) {
+				uiService.showDialog("The desired downsampling rate of " + downsampleToHz + " Hz is less than 2-fold reduced from the\n" +
+					"original sampling rate of " + samplingRate + " Hz. Please choose a smaller downsampling rate.", MessageType.ERROR_MESSAGE);
+				logService.info(LogBuilder.endBlock(false));
+				archive = null;
+				return;
+			}
+			samplingRate = downsampleToHz;
+		}
 		
 		logService.info("Located Force 1x and Force 2x. Loading sampling rate from Force 1x.");
 		
@@ -165,8 +190,6 @@ public class ImportLumicksh5Command extends DynamicCommand implements Command {
 		double[] force2x = (downsample) ?
 				downsample(reader.float64().readArray("/Force HF/Force 2x"), (int)Math.round(samplingRate/downsampleToHz)) 
 				: reader.float64().readArray("/Force HF/Force 2x");
-		
-		if (downsample) samplingRate = downsampleToHz;
 				
 		MarsTable table = new MarsTable("Force table");
 		double[] time = new double[force1x.length];
