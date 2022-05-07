@@ -2,19 +2,19 @@
 
 The company [Lumicks](https://lumicks.com) offers optical tweezers microscopes for high resolution force manipulation of biomolecules. These can include fluorescence imaging options to directly visualize single-molecule dynamics. This repository contains a Fiji/ImageJ2 command that converts from lumicks h5 format to Mars Molecule Archive format. Currently, the importer has been developed and tested with a typical two-bead optical tweezing experiment without fluorescence imaging.
 
-## Usage
+### Usage
 
 The lumicks h5 import command can be installed in Fiji by activating the [Mars update site](https://duderstadt-lab.github.io/mars-docs/install/). When Mars is installed and Fiji has been restarted, the Mars submenu should appear at the bottom of the Plugins menu. The lumicks import command can be found under Mars>Import>LUMICKS h5. When started a dialog will show up with a field for entering the path for the LUMICKS h5 file to import and the option to downsample the data. When the checkbox is activated, the Force 1x and Force 2x data is binned and averaged based on the new sampling rate provided. When the conversion process is done, a new Molecule Archive window should appear with the converted dataset.
 
 Mars documentation can be found at https://duderstadt-lab.github.io/mars-docs/
 
-## Groovy Lumicks h5 import script
+### Groovy Lumicks h5 import script
 
 For quick editing of the import procedure, a scripts folder with an ImportLumicksH5.groovy script is included in this repository. This script can be used in the Fiji script editor to perform the same import procedure. The script is included to provide the possibility to modify the import fields or structure. The script requires the Mars jars to be installed from the [Mars update site](https://duderstadt-lab.github.io/mars-docs/install/).
 
 Mars documentation can be found at https://duderstadt-lab.github.io/mars-docs/
 
-## Expected lumicks h5 hierarchy
+### Expected lumicks h5 hierarchy
 
 This lumicks h5 importer was developed based on an optical tweezer experiment in which a nucleic acid tethered between two beads was subjected to different forces. This type of c-trap experiment generates the following h5 structure:
 
@@ -34,7 +34,7 @@ This lumicks h5 importer was developed based on an optical tweezer experiment in
     ├── Trap position
     │   └── 1X                # added to molecule table column Trap_position_1X
 
-## Comments
+### Comments
 
 Typically the converted Molecule Archive is a bit larger in size than the original h5 file. The data in the Molecule Archives are saved to the same gzipped binary format used in the lumicks h5 files, but an additional Time_(s) column is added to the molecule data table, among other additional fields that result in a larger file size. This is required for Mars workflows in which collection was not performed in linear time.
 
@@ -42,6 +42,6 @@ If you encounter problems, or you discover your data is not supported, please ge
 
 Lumicks has also developed many tailored software solutions for working with their data. You can read more about that on their website or check-out their [pylake python library](https://lumicks-pylake.readthedocs.io/en/stable/).
 
-## Acknowledgements
+### Acknowledgments
 
 We would like to thank Andreas Walbrun and Professor Matthias Rief ([lab](https://www.rieflab.de)) for providing the sample data used to develop this importer. 
