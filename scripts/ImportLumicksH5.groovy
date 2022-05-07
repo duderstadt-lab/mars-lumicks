@@ -122,6 +122,8 @@ if (!forceMembers.contains("Force 1x") || !forceMembers.contains("Force 2x")) {
 double samplingRate = reader.uint64().getAttr("/Force HF/Force 1x/", "Sample rate (Hz)")
 double force1xStartTime = reader.uint64().getAttr("/Force HF/Force 1x/", "Start time (ns)")
 
+int downsampleFactor = (int)Math.round(samplingRate/downsampleToHz)
+
 if (downsample) {
 	//Check the value provided is reasonable
 	if (downsampleToHz < 1) {
@@ -143,10 +145,10 @@ if (downsample) {
 logService.info("Located Force 1x and Force 2x. Loading sampling rate from Force 1x.")
 
 double[] force1x = (downsample) ?
-		downsample(reader.float64().readArray("/Force HF/Force 1x"), (int)Math.round(samplingRate/downsampleToHz))
+		downsample(reader.float64().readArray("/Force HF/Force 1x"), downsampleFactor)
 		: reader.float64().readArray("/Force HF/Force 1x")
 double[] force2x = (downsample) ?
-		downsample(reader.float64().readArray("/Force HF/Force 2x"), (int)Math.round(samplingRate/downsampleToHz))
+		downsample(reader.float64().readArray("/Force HF/Force 2x"), downsampleFactor)
 		: reader.float64().readArray("/Force HF/Force 2x")
 
 def table = new MarsTable("Force table");
@@ -171,7 +173,7 @@ table.add(force2xCol)
 
 if (members.contains("Trap position") && reader.getGroupMembers("Trap position").contains("1X")) {
 		double[] trapPosition1x = (downsample) ?
-			downsample(reader.float64().readArray("/Trap position/1X"), (int)Math.round(samplingRate/downsampleToHz))
+			downsample(reader.float64().readArray("/Trap position/1X"), downsampleFactor)
 			: reader.float64().readArray("/Trap position/1X")
 
 		DoubleColumn trapPosition1xCol = new DoubleColumn("Trap_position_1X")
